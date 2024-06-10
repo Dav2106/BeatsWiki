@@ -31,7 +31,7 @@ class ProducerController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function store(StoreProducerRequest $request)
     {
         $producer =[
             'name' => $request->name,
@@ -39,10 +39,10 @@ class ProducerController extends Controller
         ];
         DB::beginTransaction();
         try{
-             $Producer = $this->producerRepositoryInterface->create($producer);
+             $producer = $this->producerRepositoryInterface->create($producer);
 
              DB::commit();
-             return ResponseClass::sendResponse(new ProducerResource($Producer),'Producer Create Successful',201);
+             return ResponseClass::sendResponse(new ProducerResource($producer),'Producer Create Successful',201);
 
         }catch(\Exception $ex){
             return ResponseClass::rollback($ex);
@@ -54,15 +54,15 @@ class ProducerController extends Controller
      */
     public function show($id)
     {
-        $Producer = $this->producerRepositoryInterface->getById($id);
+        $producer = $this->producerRepositoryInterface->getById($id);
 
-        return ResponseClass::sendResponse(new ProducerResource($Producer),'',200);
+        return ResponseClass::sendResponse(new ProducerResource($producer),'',200);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Producer $Producer)
+    public function edit(Producer $producer)
     {
         //
     }
@@ -78,7 +78,7 @@ class ProducerController extends Controller
         ];
         DB::beginTransaction();
         try{
-             $Producer = $this->producerRepositoryInterface->update($updateProducer,$id);
+             $producer = $this->producerRepositoryInterface->update($updateProducer,$id);
 
              DB::commit();
              return ResponseClass::sendResponse('Producer Update Successful','',201);

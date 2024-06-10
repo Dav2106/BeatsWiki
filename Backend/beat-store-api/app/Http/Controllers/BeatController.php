@@ -31,7 +31,7 @@ class BeatController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function store()
     {
         $beat =[
             'name' => $request->name,
@@ -40,10 +40,10 @@ class BeatController extends Controller
         ];
         DB::beginTransaction();
         try{
-             $Beat = $this->beatRepositoryInterface->create($beat);
+             $beat = $this->beatRepositoryInterface->create($beat);
 
              DB::commit();
-             return ResponseClass::sendResponse(new BeatResource($Beat),'Beat Create Successful',201);
+             return ResponseClass::sendResponse(new BeatResource($beat),'Beat Create Successful',201);
 
         }catch(\Exception $ex){
             return ResponseClass::rollback($ex);
@@ -55,15 +55,15 @@ class BeatController extends Controller
      */
     public function show($id)
     {
-        $Beat = $this->beatRepositoryInterface->getById($id);
+        $beat = $this->beatRepositoryInterface->getById($id);
 
-        return ResponseClass::sendResponse(new BeatResource($Beat),'',200);
+        return ResponseClass::sendResponse(new BeatResource($beat),'',200);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Beat $Beat)
+    public function edit(Beat $beat)
     {
         //
     }
@@ -80,7 +80,7 @@ class BeatController extends Controller
         ];
         DB::beginTransaction();
         try{
-             $Beat = $this->beatRepositoryInterface->update($updateBeat,$id);
+             $beat = $this->beatRepositoryInterface->update($updateBeat,$id);
 
              DB::commit();
              return ResponseClass::sendResponse('Beat Update Successful','',201);
