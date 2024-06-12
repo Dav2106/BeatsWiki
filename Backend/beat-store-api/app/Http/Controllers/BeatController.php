@@ -31,7 +31,7 @@ class BeatController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function store()
+    public function store(StoreBeatRequest $request)
     {
         $beat =[
             'name' => $request->name,
